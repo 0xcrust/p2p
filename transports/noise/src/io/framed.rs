@@ -68,9 +68,11 @@ impl<S: SessionState> Codec<S> {
             }
         };
 
+        let prefix = u16::to_be_bytes(n as u16);
         self.encrypt_buffer.truncate(n);
 
-        dst.put_u16(n as u16);
+        //dst.put_u16(n as u16);
+        dst.put(&prefix[..]);
         dst.put(&self.encrypt_buffer[..]);
 
         Ok(())
